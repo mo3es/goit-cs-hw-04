@@ -33,10 +33,10 @@ def read_keys(src_path: str) -> list:
 def get_path()-> str:
     while True:
         src_path = input("Enter path to file with keywords: ").strip()
-        if os.path.exists(src_path):
+        if os.path.exists(src_path) and os.path.isfile(src_path):
             return src_path
         else:
-            print(f'Entered path - {src_path} - is not found.')
+            print(f'Entered path - {src_path} - not found or not a file.')
 
 
 def get_keys() -> list:

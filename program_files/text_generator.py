@@ -9,14 +9,8 @@ LOWER_BOUND = 1
 REQUEST_TYPE_PARAGRAPHES = "paragraphes"
 REQUEST_TYPE_FILES = "files"
 
-"""
-Встановлюємо шлях до директорії src/texts, до якої мають бути збережені згенеровані тексти. Дана директорія має знаходитись у директорії srcб яка, своєю чергою, розташована у корені проекту. Відповіно, нам необхідно знайти
-шлях до попередньої директорії - тобто, від абсолютного шляху до файла-генератора (os.path.abspath(__file__)) знайти 
-директорію - os.path.dirname(os.path.abspath(__file__)), від якої, відповідно, знайти батьківську директорію - os.path.dirname(os.path.dirname(os.path.abspath(__file__)). До отриманого шляху додати цільову директорію - os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'src/texts').
-"""
-path_to_save = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src/texts"
-)
+
+path_to_save = os.path.abspath(os.path.join(os.path.dirname(__file__), '../src/texts'))
 
 
 def generate_text(length=0) -> str:
@@ -36,7 +30,7 @@ def get_quantity(request_type_string: str) -> int:
         quantity = input(
             f"How many {request_type_string} you want to generate? (from {LOWER_BOUND} to {upper_bound}) "
         )
-        
+
         if quantity.isnumeric():
             quantity = int(quantity)
             if quantity not in range(LOWER_BOUND, upper_bound):
@@ -79,6 +73,7 @@ def generate():
         except IOError as e:
             print(f"An ERROR occured during {file_path} saving: {e}.")
     print("Generation done")
+    return path_to_save
 
 
 if __name__ == "__main__":
